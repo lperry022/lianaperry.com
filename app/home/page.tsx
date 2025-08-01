@@ -81,7 +81,7 @@ const HomePage = () => {
               <i className="fab fa-linkedin-in" />
             </a>
             <a
-              href="https://github.com/your-github-username"
+              href="https://github.com/lperry022"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-purple-200 transition"
