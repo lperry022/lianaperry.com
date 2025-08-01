@@ -4,6 +4,9 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import DegreesDisplay from '@/components/DegreesDisplay';
+import dynamic from 'next/dynamic';
+import '@fortawesome/fontawesome-free/css/all.min.css';
+import Loading from '@/components/Loading';
 
 const degrees = [
   'Bachelor of Psychological Science',
@@ -11,7 +14,22 @@ const degrees = [
 ];
 
 const HomePage = () => {
+  const [loading, setLoading] = useState(true);
   const [currentDegree, setCurrentDegree] = useState(0);
+
+  useEffect(() => {
+    const hasSeenLoading = sessionStorage.getItem('hasSeenLoading');
+
+    if (hasSeenLoading) {
+      setLoading(false);
+    } else {
+      sessionStorage.setItem('hasSeenLoading', 'true');
+      const timer = setTimeout(() => {
+        setLoading(false);
+      }, 2500); // Adjust duration if needed
+      return () => clearTimeout(timer);
+    }
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -20,17 +38,20 @@ const HomePage = () => {
     return () => clearInterval(interval);
   }, []);
 
+  if (loading) return <Loading />;
+
   return (
     <div className="min-h-screen bg-black text-white">
       {/* Navbar */}
+
       <nav className="w-full p-4 flex justify-between items-center border-b border-gray-800">
         <Link href="/" className="text-purple-300 font-bold text-lg">
           Liana Perry
         </Link>
         <div className="space-x-6 text-sm">
           <Link href="/home" className="hover:text-purple-400 transition duration-200 hover:underline underline-offset-4">Home</Link>
-          <Link href="/projects" className="hover:text-purple-400 transition duration-200 hover:underline underline-offset-4">Projects</Link>
-          <Link href="/contact" className="hover:text-purple-400 transition duration-200 hover:underline underline-offset-4">Contact</Link>
+          <Link href="/maintenance" className="hover:text-purple-400 transition duration-200 hover:underline underline-offset-4">Projects</Link>
+          <Link href="/maintenance" className="hover:text-purple-400 transition duration-200 hover:underline underline-offset-4">Contact</Link>
           <a href="/Resume.pdf" download className="hover:text-purple-400 transition duration-200 hover:underline underline-offset-4">Resume</a>
         </div>
       </nav>
@@ -83,6 +104,7 @@ const HomePage = () => {
           </div>
         </div>
       </div>
+
       {/* About Me Section */}
       <section className="px-6 py-20">
         <h2 className="text-2xl font-bold text-purple-400 mb-4">About Me</h2>
@@ -99,7 +121,7 @@ const HomePage = () => {
           <Link
             href="/maintenance"
             className="bg-white/5 backdrop-blur-sm hover:bg-white/10 p-6 rounded-xl border border-white/10 transition transform hover:-translate-y-1 hover:shadow-lg hover:shadow-purple-700/30 duration-300"
->            <h3 className="text-lg font-semibold text-purple-300 mb-2">🛠️ Projects</h3>
+          >            <h3 className="text-lg font-semibold text-purple-300 mb-2">🛠️ Projects</h3>
             <p className="text-sm text-gray-300">View my cybersecurity and development projects — from buffer overflows to secure DevOps pipelines.</p>
           </Link>
           <div className="bg-white/5 backdrop-blur-sm hover:bg-white/10 p-6 rounded-xl border border-white/10 transition transform hover:-translate-y-1 hover:shadow-lg hover:shadow-purple-700/30 duration-300">
