@@ -4,7 +4,6 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import DegreesDisplay from '@/components/DegreesDisplay';
-import dynamic from 'next/dynamic';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import Loading from '@/components/Loading';
 
@@ -17,18 +16,13 @@ const HomePage = () => {
   const [loading, setLoading] = useState(true);
   const [currentDegree, setCurrentDegree] = useState(0);
 
+  // Always show loading animation on every visit
   useEffect(() => {
-    const hasSeenLoading = sessionStorage.getItem('hasSeenLoading');
-
-    if (hasSeenLoading) {
+    const timer = setTimeout(() => {
       setLoading(false);
-    } else {
-      sessionStorage.setItem('hasSeenLoading', 'true');
-      const timer = setTimeout(() => {
-        setLoading(false);
-      }, 2500); // Adjust duration if needed
-      return () => clearTimeout(timer);
-    }
+    }, 6500); // 6.5 seconds
+
+    return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => {
@@ -40,6 +34,7 @@ const HomePage = () => {
 
   if (loading) return <Loading />;
 
+  
   return (
     <div className="min-h-screen bg-black text-white">
       {/* Navbar */}
