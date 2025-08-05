@@ -6,6 +6,8 @@ import Image from 'next/image';
 import DegreesDisplay from '@/components/DegreesDisplay';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import Loading from '@/components/Loading';
+import Navbar from '@/components/Navbar'; 
+import Footer from '@/components/Footer';
 
 const degrees = [
   'Bachelor of Psychological Science',
@@ -43,19 +45,7 @@ useEffect(() => {
   return (
     <div className="min-h-screen bg-black text-white">
       {/* Navbar */}
-
-      <nav className="w-full p-4 flex justify-between items-center border-b border-gray-800">
-        <Link href="/" className="text-purple-300 font-bold text-lg">
-          Liana Perry
-        </Link>
-        <div className="space-x-6 text-sm">
-          <Link href="/home" className="hover:text-purple-400 transition duration-200 hover:underline underline-offset-4">Home</Link>
-          <Link href="/maintenance" className="hover:text-purple-400 transition duration-200 hover:underline underline-offset-4">Projects</Link>
-          <Link href="/contact" className="hover:text-purple-400 transition duration-200 hover:underline underline-offset-4">Contact</Link>
-          <a href="/Resume.pdf" download className="hover:text-purple-400 transition duration-200 hover:underline underline-offset-4">Resume</a>
-        </div>
-      </nav>
-
+      <Navbar />
       {/* Hero Section */}
       <div className="flex flex-col md:flex-row items-center justify-center text-center md:text-left gap-10 px-6 py-24">
         {/* Profile Image */}
@@ -153,7 +143,8 @@ useEffect(() => {
         </div>
       </section>
 
-      {/* Footer */}
+            {/* Footer*/}
+    <Footer />
     </div>
   );
 };
