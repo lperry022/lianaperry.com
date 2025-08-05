@@ -24,7 +24,7 @@ const Entry = () => {
           <p className="text-xs uppercase tracking-widest text-gray-300">
             Inspired by my background in psychology and cybersecurity, the interface reflects how I think, learn, and evolve.
           </p>
-              <GlowButton text="ENTER THE SYSTEM" href="/home" />
+          <GlowButton text="Enter the System" href="/home" />
         </div>
 
       </div>
