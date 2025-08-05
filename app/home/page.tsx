@@ -88,8 +88,6 @@ const HomePage = () => {
               href="mailto:lianaperryy@gmail.com"
               className="hover:text-purple-200 transition"
               aria-label="Email"
-              target="_blank"
-              rel="noopener noreferrer"
             >
               <i className="fas fa-envelope" />
             </a>
