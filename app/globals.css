@@ -6,6 +6,9 @@
   --background: #ffffff;
   --foreground: #171717;
 }
+.glow {
+  text-shadow: 0 0 10px #a855f7, 0 0 20px #a855f7, 0 0 30px #a855f7;
+}
 
 @theme inline {
   --color-background: var(--background);

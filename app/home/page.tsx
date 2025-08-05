@@ -51,7 +51,7 @@ useEffect(() => {
         <div className="space-x-6 text-sm">
           <Link href="/home" className="hover:text-purple-400 transition duration-200 hover:underline underline-offset-4">Home</Link>
           <Link href="/maintenance" className="hover:text-purple-400 transition duration-200 hover:underline underline-offset-4">Projects</Link>
-          <Link href="/maintenance" className="hover:text-purple-400 transition duration-200 hover:underline underline-offset-4">Contact</Link>
+          <Link href="/contact" className="hover:text-purple-400 transition duration-200 hover:underline underline-offset-4">Contact</Link>
           <a href="/Resume.pdf" download className="hover:text-purple-400 transition duration-200 hover:underline underline-offset-4">Resume</a>
         </div>
       </nav>
@@ -143,7 +143,7 @@ useEffect(() => {
           </Link>
           {/* Contact */}
           <Link
-            href="/maintenance"
+            href="/contact"
             className="bg-white/5 backdrop-blur-sm hover:bg-white/10 p-6 rounded-xl border border-white/10 transition transform hover:-translate-y-1 hover:shadow-lg hover:shadow-purple-700/30 duration-300"
 
           >            <h3 className="text-lg font-semibold text-purple-300 mb-2">📬 Contact</h3>
