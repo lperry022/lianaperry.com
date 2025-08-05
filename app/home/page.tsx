@@ -6,7 +6,7 @@ import Image from 'next/image';
 import DegreesDisplay from '@/components/DegreesDisplay';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import Loading from '@/components/Loading';
-import Navbar from '@/components/Navbar'; 
+import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 
 const degrees = [
@@ -18,19 +18,19 @@ const HomePage = () => {
   const [loading, setLoading] = useState(true);
   const [currentDegree, setCurrentDegree] = useState(0);
 
-useEffect(() => {
-  const hasSeenLoading = sessionStorage.getItem('hasSeenBoot');
+  useEffect(() => {
+    const hasSeenLoading = sessionStorage.getItem('hasSeenBoot');
 
-  if (hasSeenLoading) {
-    setLoading(false);
-  } else {
-    sessionStorage.setItem('hasSeenBoot', 'true');
-    const timeout = setTimeout(() => {
+    if (hasSeenLoading) {
       setLoading(false);
-    }, 6000); 
-    return () => clearTimeout(timeout);
-  }
-}, []);
+    } else {
+      sessionStorage.setItem('hasSeenBoot', 'true');
+      const timeout = setTimeout(() => {
+        setLoading(false);
+      }, 6000);
+      return () => clearTimeout(timeout);
+    }
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -41,7 +41,7 @@ useEffect(() => {
 
   if (loading) return <Loading />;
 
-  
+
   return (
     <div className="min-h-screen bg-black text-white">
       {/* Navbar */}
@@ -88,6 +88,8 @@ useEffect(() => {
               href="mailto:lianaperryy@gmail.com"
               className="hover:text-purple-200 transition"
               aria-label="Email"
+              target="_blank"
+              rel="noopener noreferrer"
             >
               <i className="fas fa-envelope" />
             </a>
@@ -143,8 +145,8 @@ useEffect(() => {
         </div>
       </section>
 
-            {/* Footer*/}
-    <Footer />
+      {/* Footer*/}
+      <Footer />
     </div>
   );
 };

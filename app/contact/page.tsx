@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FaLinkedin, FaGithub, FaEnvelope } from 'react-icons/fa';
 import GlowButton from '@/components/GlowButton';
-import Navbar from '@/components/Navbar'; 
+import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 
 const Contact = () => {
@@ -72,13 +72,19 @@ const Contact = () => {
           <div className="flex flex-col justify-center items-center space-y-4">
             <h3 className="text-2xl font-semibold text-purple-300 mb-2">Connect with me</h3>
             <div className="flex space-x-6 text-purple-400 text-3xl">
-              <a href="https://linkedin.com/in/your-linkedin" target="_blank" rel="noopener noreferrer">
+              <a href="https://www.linkedin.com/in/liana-perry-b5aa2717b/" target="_blank" rel="noopener noreferrer">
                 <FaLinkedin className="hover:text-purple-300 hover:scale-110 transition transform duration-300" />
               </a>
-              <a href="https://github.com/your-github" target="_blank" rel="noopener noreferrer">
+              <a href="https://github.com/lperry022" target="_blank" rel="noopener noreferrer">
                 <FaGithub className="hover:text-purple-300 hover:scale-110 transition transform duration-300" />
               </a>
-              <a href="mailto:your@email.com">
+              <a
+                href="mailto:lianaperryy@gmail.com"
+                className="hover:text-purple-200 transition"
+                aria-label="Email"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <FaEnvelope className="hover:text-purple-300 hover:scale-110 transition transform duration-300" />
               </a>
             </div>
@@ -86,7 +92,7 @@ const Contact = () => {
         </motion.div>
       </section>
       {/* Footer*/}
-    <Footer />
+      <Footer />
     </div>
   );
 };
