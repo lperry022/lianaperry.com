@@ -16,14 +16,19 @@ const HomePage = () => {
   const [loading, setLoading] = useState(true);
   const [currentDegree, setCurrentDegree] = useState(0);
 
-  // Always show loading animation on every visit
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 6500); // 6.5 seconds
+useEffect(() => {
+  const hasSeenLoading = sessionStorage.getItem('hasSeenBoot');
 
-    return () => clearTimeout(timer);
-  }, []);
+  if (hasSeenLoading) {
+    setLoading(false);
+  } else {
+    sessionStorage.setItem('hasSeenBoot', 'true');
+    const timeout = setTimeout(() => {
+      setLoading(false);
+    }, 3000); 
+    return () => clearTimeout(timeout);
+  }
+}, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
