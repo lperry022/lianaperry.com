@@ -25,7 +25,7 @@ useEffect(() => {
     sessionStorage.setItem('hasSeenBoot', 'true');
     const timeout = setTimeout(() => {
       setLoading(false);
-    }, 3000); 
+    }, 6000); 
     return () => clearTimeout(timeout);
   }
 }, []);
