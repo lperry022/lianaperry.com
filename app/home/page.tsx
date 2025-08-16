@@ -6,8 +6,7 @@ import Image from 'next/image';
 import DegreesDisplay from '@/components/DegreesDisplay';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import Loading from '@/components/Loading';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
+
 
 const degrees = [
   'Bachelor of Psychological Science',
@@ -44,8 +43,6 @@ const HomePage = () => {
 
   return (
     <div className="min-h-screen bg-black text-white">
-      {/* Navbar */}
-      <Navbar />
       {/* Hero Section */}
       <div className="flex flex-col md:flex-row items-center justify-center text-center md:text-left gap-10 px-6 py-24">
         {/* Profile Image */}
@@ -109,7 +106,7 @@ const HomePage = () => {
           {/* cards */}
           {/* Projects */}
           <Link
-            href="/maintenance"
+            href="/projects"
             className="bg-white/5 backdrop-blur-sm hover:bg-white/10 p-6 rounded-xl border border-white/10 transition transform hover:-translate-y-1 hover:shadow-lg hover:shadow-purple-700/30 duration-300"
           >            <h3 className="text-lg font-semibold text-purple-300 mb-2">🛠️ Projects</h3>
             <p className="text-sm text-gray-300">View my cybersecurity and development projects — from buffer overflows to secure DevOps pipelines.</p>
@@ -143,8 +140,6 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* Footer*/}
-      <Footer />
     </div>
   );
 };
