@@ -7,6 +7,7 @@ import Loading from '@/components/Loading';
 import ThemeToggle from '@/components/ThemeToggle';
 import { motion } from 'framer-motion';
 import WorkTimeline from '@/components/WorkTimeline';
+import Featured from '@/components/Featured';
 
 export default function HomePage() {
   const [loading, setLoading] = useState(true);
@@ -111,6 +112,10 @@ export default function HomePage() {
             </div>
           </div>
         </section>
+
+        {/* FEATURED */}
+        <Featured />
+        
 
         {/* =========================
             ABOUT
