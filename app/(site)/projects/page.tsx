@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import React, { useEffect, useMemo, useState } from "react";
-import Link from "next/link";
-import Image from "next/image";
-import { motion } from "framer-motion";
+import React, { useEffect, useMemo, useState } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import { motion } from 'framer-motion';
 import {
   Github,
   Star,
@@ -12,17 +12,17 @@ import {
   CalendarClock,
   Filter,
   Search,
-} from "lucide-react";
+} from 'lucide-react';
 
 // === Tunables ===
-const GITHUB_USER = "lperry022";
+const GITHUB_USER = 'lperry022';
 
 // Unified, theme-aware card class
 const CARD_CLASS =
-  "rounded-xl border p-6 backdrop-blur-sm transition duration-300 " +
-  "hover:-translate-y-1 hover:shadow-lg hover:shadow-purple-500/10 " +
-  "border-neutral-200 bg-neutral-50/80 " +
-  "dark:border-white/10 dark:bg-white/5 dark:hover:bg-white/10";
+  'rounded-xl border p-6 backdrop-blur-sm transition duration-300 ' +
+  'hover:-translate-y-1 hover:shadow-lg hover:shadow-purple-500/10 ' +
+  'border-neutral-200 bg-neutral-50/80 ' +
+  'dark:border-white/10 dark:bg-white/5 dark:hover:bg-white/10';
 
 // === Types ===
 interface Repo {
@@ -50,7 +50,7 @@ interface PinnedItem {
 }
 
 const shimmer =
-  "before:absolute before:inset-0 before:animate-pulse before:bg-[linear-gradient(110deg,transparent,rgba(0,0,0,0.06),transparent)] dark:before:bg-[linear-gradient(110deg,transparent,rgba(255,255,255,0.06),transparent)] before:bg-[length:200%_100%]";
+  'before:absolute before:inset-0 before:animate-pulse before:bg-[linear-gradient(110deg,transparent,rgba(0,0,0,0.06),transparent)] dark:before:bg-[linear-gradient(110deg,transparent,rgba(255,255,255,0.06),transparent)] before:bg-[length:200%_100%]';
 
 export default function ProjectsPage() {
   const [repos, setRepos] = useState<Repo[]>([]);
@@ -58,9 +58,9 @@ export default function ProjectsPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const [query, setQuery] = useState("");
-  const [filter, setFilter] = useState<string>("All");
-  const [sort, setSort] = useState<string>("recent");
+  const [query, setQuery] = useState('');
+  const [filter, setFilter] = useState<string>('All');
+  const [sort, setSort] = useState<string>('recent');
 
   // Fetch pinned + public repos
   useEffect(() => {
@@ -71,19 +71,18 @@ export default function ProjectsPage() {
         setError(null);
 
         const [pinnedRes, reposRes] = await Promise.all([
-          fetch("/api/github/pinned", { next: { revalidate: 3600 } }),
+          fetch('/api/github/pinned', { next: { revalidate: 3600 } }),
           fetch(
             `https://api.github.com/users/${GITHUB_USER}/repos?per_page=100&sort=updated`,
             {
-              headers: { Accept: "application/vnd.github+json" },
+              headers: { Accept: 'application/vnd.github+json' },
               next: { revalidate: 3600 },
             }
           ),
         ]);
 
         if (!pinnedRes.ok) throw new Error(`Pinned fetch failed: ${pinnedRes.status}`);
-        if (!reposRes.ok)
-          throw new Error(`GitHub: ${reposRes.status} ${reposRes.statusText}`);
+        if (!reposRes.ok) throw new Error(`GitHub: ${reposRes.status} ${reposRes.statusText}`);
 
         const { pinned: pinnedJson } = await pinnedRes.json();
         const reposJson: Repo[] = await reposRes.json();
@@ -105,7 +104,7 @@ export default function ProjectsPage() {
           setRepos(reposJson);
         }
       } catch (e: any) {
-        if (!cancelled) setError(e.message ?? "Failed to load repositories");
+        if (!cancelled) setError(e.message ?? 'Failed to load repositories');
       } finally {
         if (!cancelled) setLoading(false);
       }
@@ -118,13 +117,13 @@ export default function ProjectsPage() {
 
   // Non-featured repos (skip forks/archived and skip any already in pinned)
   const otherRepos = useMemo(() => {
-    const pinnedNames = new Set(pinned.map((p) => (p.title || "").toLowerCase()));
+    const pinnedNames = new Set(pinned.map((p) => (p.title || '').toLowerCase()));
     return repos
       .filter((r) => !r.fork && !r.archived && !pinnedNames.has(r.name.toLowerCase()))
       .map((r) => ({
         title: r.name,
-        blurb: r.description ?? "No description provided.",
-        tags: [r.language ?? "Repo"],
+        blurb: r.description ?? 'No description provided.',
+        tags: [r.language ?? 'Repo'],
         repoUrl: r.html_url,
         homepage: r.homepage ?? undefined,
         stars: r.stargazers_count,
@@ -135,34 +134,34 @@ export default function ProjectsPage() {
   }, [repos, pinned]);
 
   const categories = [
-    "All",
-    "Web",
-    "DFIR",
-    "SecDevOps",
-    "Tools",
-    "Python",
-    "TypeScript",
-    "Next.js",
-    "Node",
-    "Jenkins",
+    'All',
+    'Web',
+    'DFIR',
+    'SecDevOps',
+    'Tools',
+    'Python',
+    'TypeScript',
+    'Next.js',
+    'Node',
+    'Jenkins',
   ];
 
   // Apply search/filter/sort across featured + others
   const filtered = useMemo(() => {
     const apply = (list: any[]) =>
       list.filter((p) => {
-        const matchesSearch = (p.title + " " + p.blurb)
+        const matchesSearch = (p.title + ' ' + p.blurb)
           .toLowerCase()
           .includes(query.toLowerCase());
         const matchesFilter =
-          filter === "All" ||
+          filter === 'All' ||
           (p.tags ?? []).some((t: string) => t.toLowerCase() === filter.toLowerCase());
         return matchesSearch && matchesFilter;
       });
 
     const sorter = (a: any, b: any) => {
-      if (sort === "stars") return (b.stars ?? 0) - (a.stars ?? 0);
-      if (sort === "az") return a.title.localeCompare(b.title);
+      if (sort === 'stars') return (b.stars ?? 0) - (a.stars ?? 0);
+      if (sort === 'az') return a.title.localeCompare(b.title);
       const ad = a.updated ? new Date(a.updated).getTime() : 0;
       const bd = b.updated ? new Date(b.updated).getTime() : 0;
       return bd - ad; // recent
@@ -173,7 +172,7 @@ export default function ProjectsPage() {
   }, [pinned, otherRepos, filter, query, sort]);
 
   return (
-    <div className="relative min-h-screen bg-white text-neutral-900 dark:bg-black dark:text-zinc-100 transition-colors">
+    <div className="relative min-h-screen transition-colors">
       <section className="mx-auto w-full max-w-6xl px-4 pb-32 pt-28 md:px-6">
         <motion.h1
           initial={{ opacity: 0, y: 8 }}
@@ -185,8 +184,8 @@ export default function ProjectsPage() {
         </motion.h1>
 
         <p className="mb-8 max-w-2xl text-neutral-700 dark:text-zinc-300">
-          Experiments and coursework spanning{" "}
-          <span className="text-violet-700 dark:text-violet-400">DFIR</span>,{" "}
+          Experiments and coursework spanning{' '}
+          <span className="text-violet-700 dark:text-violet-400">DFIR</span>,{' '}
           <span className="text-violet-700 dark:text-violet-400">SecDevOps</span>, and modern web.
           Everything here is live from GitHub. Featured projects mirror my GitHub “Pinned” repos.
         </p>
@@ -241,8 +240,8 @@ export default function ProjectsPage() {
                 onClick={() => setFilter(c)}
                 className={`rounded-full border px-3 py-1 text-xs transition ${
                   filter === c
-                    ? "border-violet-400 bg-violet-100 text-violet-900 dark:border-violet-500 dark:bg-violet-500/20 dark:text-violet-100"
-                    : "border-neutral-300 bg-white text-neutral-800 hover:border-neutral-400 dark:border-white/10 dark:bg-zinc-900/60 dark:text-zinc-300"
+                    ? 'border-violet-400 bg-violet-100 text-violet-900 dark:border-violet-500 dark:bg-violet-500/20 dark:text-violet-100'
+                    : 'border-neutral-300 bg-white text-neutral-800 hover:border-neutral-400 dark:border-white/10 dark:bg-zinc-900/60 dark:text-zinc-300'
                 }`}
               >
                 {c}
@@ -279,13 +278,13 @@ export default function ProjectsPage() {
         <div className="mt-12 text-center text-sm text-neutral-600 dark:text-zinc-400">
           <p className="mb-2">Want details on a specific project or private coursework?</p>
           <p>
-            Ping me on GitHub{" "}
+            Ping me on GitHub{' '}
             <Link
               href={`https://github.com/${GITHUB_USER}`}
               className="text-violet-700 underline dark:text-violet-300"
             >
               @{GITHUB_USER}
-            </Link>{" "}
+            </Link>{' '}
             or via the contact page.
           </p>
         </div>
@@ -311,7 +310,7 @@ function ProjectGrid({ items }: { items: any[] }) {
           key={p.title + idx}
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-20%" }}
+          viewport={{ once: true, margin: '-20%' }}
           transition={{ duration: 0.4, delay: idx * 0.04 }}
           className={`group relative overflow-hidden ${CARD_CLASS}`}
         >
@@ -363,7 +362,7 @@ function ProjectGrid({ items }: { items: any[] }) {
 
           <div className="mt-auto flex items-center justify-between text-xs text-neutral-600 dark:text-gray-400">
             <div className="flex items-center gap-3">
-              {typeof p.stars === "number" && (
+              {typeof p.stars === 'number' && (
                 <span className="inline-flex items-center gap-1">
                   <Star size={14} className="opacity-80" /> {p.stars}
                 </span>

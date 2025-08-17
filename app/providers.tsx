@@ -1,16 +1,16 @@
-'use client';
-
-import { ThemeProvider } from 'next-themes';
+// app/providers.tsx
+'use client'
+import { ThemeProvider } from 'next-themes'
 
 export default function Providers({ children }: { children: React.ReactNode }) {
   return (
     <ThemeProvider
-      attribute="class"       // adds/removes "dark" on <html>
-      defaultTheme="light"    // start in light (change if you prefer)
-      enableSystem={false}    // keep it predictable while you test
+      attribute="class"           // puts "dark" on <html>
+      defaultTheme="system"
+      enableSystem
       disableTransitionOnChange
     >
       {children}
     </ThemeProvider>
-  );
+  )
 }

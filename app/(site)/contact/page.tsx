@@ -4,14 +4,14 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FaLinkedin, FaGithub, FaEnvelope } from 'react-icons/fa';
 
-const Contact = () => {
+export default function Contact() {
   const [submitted, setSubmitted] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = e.currentTarget;
-
     const formData = new FormData(form);
+
     await fetch('https://formspree.io/f/xeozrgga', {
       method: 'POST',
       body: formData,
@@ -20,89 +20,88 @@ const Contact = () => {
 
     setSubmitted(true);
     form.reset();
-  };
+  }
 
   return (
-    <div className="min-h-screen bg-white text-neutral-900 dark:bg-black dark:text-white transition-colors">
-      {/* if your navbar is a floating dock, give the page breathing room */}
+    // No bg/text here—inherit from <body> (which toggles via next-themes)
+    <div className="min-h-screen">
+      {/* top padding so your floating navbar/dock doesn't overlap */}
       <section className="px-6 pt-28 pb-20 flex items-center justify-center">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="max-w-5xl w-full grid grid-cols-1 md:grid-cols-2 gap-12"
+          className="w-full max-w-5xl grid grid-cols-1 gap-12 md:grid-cols-2"
         >
-          {/* Contact Form */}
+          {/* Contact form */}
           <div>
-            <h2 className="text-4xl font-bold mb-6 text-purple-500 dark:text-purple-400">
+            <h2 className="mb-6 text-4xl font-bold text-purple-700 dark:text-purple-400">
               Contact Me
             </h2>
 
             {submitted ? (
-              <p className="text-green-600 dark:text-green-400 text-lg">
+              <p className="text-lg text-emerald-700 dark:text-emerald-400">
                 Thanks for your message! I’ll get back to you soon.
               </p>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-6">
-                <div>
-                  <label className="block mb-2 text-sm font-medium text-neutral-700 dark:text-zinc-300">
-                    Name
-                  </label>
+                <Field label="Name">
                   <input
                     name="name"
+                    autoComplete="name"
                     required
                     className="w-full rounded-md px-4 py-2
                                bg-white text-neutral-900
+                               border border-neutral-300
+                               placeholder-neutral-500
+                               outline-none ring-0
+                               focus:border-violet-400 focus:ring-2 focus:ring-violet-300/40
                                dark:bg-zinc-900 dark:text-white
-                               border border-neutral-300 dark:border-white/10
-                               placeholder-neutral-500 dark:placeholder-zinc-500
-                               outline-none ring-0 focus:border-violet-400 focus:ring-2 focus:ring-violet-300/40
+                               dark:border-white/10 dark:placeholder-zinc-500
                                dark:focus:border-violet-500 dark:focus:ring-violet-500/30"
                   />
-                </div>
+                </Field>
 
-                <div>
-                  <label className="block mb-2 text-sm font-medium text-neutral-700 dark:text-zinc-300">
-                    Email
-                  </label>
+                <Field label="Email">
                   <input
                     type="email"
                     name="email"
+                    autoComplete="email"
                     required
                     className="w-full rounded-md px-4 py-2
                                bg-white text-neutral-900
+                               border border-neutral-300
+                               placeholder-neutral-500
+                               outline-none ring-0
+                               focus:border-violet-400 focus:ring-2 focus:ring-violet-300/40
                                dark:bg-zinc-900 dark:text-white
-                               border border-neutral-300 dark:border-white/10
-                               placeholder-neutral-500 dark:placeholder-zinc-500
-                               outline-none ring-0 focus:border-violet-400 focus:ring-2 focus:ring-violet-300/40
+                               dark:border-white/10 dark:placeholder-zinc-500
                                dark:focus:border-violet-500 dark:focus:ring-violet-500/30"
                   />
-                </div>
+                </Field>
 
-                <div>
-                  <label className="block mb-2 text-sm font-medium text-neutral-700 dark:text-zinc-300">
-                    Message
-                  </label>
+                <Field label="Message">
                   <textarea
                     name="message"
                     rows={5}
                     required
                     className="w-full rounded-md px-4 py-2
                                bg-white text-neutral-900
+                               border border-neutral-300
+                               placeholder-neutral-500
+                               outline-none ring-0
+                               focus:border-violet-400 focus:ring-2 focus:ring-violet-300/40
                                dark:bg-zinc-900 dark:text-white
-                               border border-neutral-300 dark:border-white/10
-                               placeholder-neutral-500 dark:placeholder-zinc-500
-                               outline-none ring-0 focus:border-violet-400 focus:ring-2 focus:ring-violet-300/40
+                               dark:border-white/10 dark:placeholder-zinc-500
                                dark:focus:border-violet-500 dark:focus:ring-violet-500/30"
                   />
-                </div>
+                </Field>
 
-                {/* Use a real submit button (GlowButton as a Link won’t submit forms) */}
                 <button
                   type="submit"
                   className="inline-flex items-center justify-center rounded-lg px-4 py-2
-                             font-medium transition
-                             bg-violet-600 hover:bg-violet-500 text-white
+                             font-medium text-white transition
+                             bg-violet-600 hover:bg-violet-500
                              focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-400/60"
                 >
                   Send Message
@@ -111,43 +110,62 @@ const Contact = () => {
             )}
           </div>
 
-          {/* Socials Section */}
-          <div className="flex flex-col justify-center items-center space-y-4">
-            <h3 className="text-2xl font-semibold text-purple-600 dark:text-purple-300 mb-2">
+          {/* Socials */}
+          <div className="flex flex-col items-center justify-center space-y-4">
+            <h3 className="mb-2 text-2xl font-semibold text-purple-700 dark:text-purple-300">
               Connect with me
             </h3>
             <div className="flex space-x-6 text-3xl">
-              <a
-                href="https://www.linkedin.com/in/liana-perry-b5aa2717b/"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="LinkedIn"
-                className="text-purple-500 hover:text-purple-400 dark:text-purple-300 dark:hover:text-purple-200 transition transform hover:scale-110"
-              >
+              <Social href="https://www.linkedin.com/in/liana-perry-b5aa2717b/" label="LinkedIn">
                 <FaLinkedin />
-              </a>
-              <a
-                href="https://github.com/lperry022"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="GitHub"
-                className="text-purple-500 hover:text-purple-400 dark:text-purple-300 dark:hover:text-purple-200 transition transform hover:scale-110"
-              >
+              </Social>
+              <Social href="https://github.com/lperry022" label="GitHub">
                 <FaGithub />
-              </a>
-              <a
-                href="mailto:lianaperryy@gmail.com"
-                aria-label="Email"
-                className="text-purple-500 hover:text-purple-400 dark:text-purple-300 dark:hover:text-purple-200 transition transform hover:scale-110"
-              >
+              </Social>
+              <Social href="mailto:lianaperryy@gmail.com" label="Email">
                 <FaEnvelope />
-              </a>
+              </Social>
             </div>
           </div>
         </motion.div>
       </section>
     </div>
   );
-};
+}
 
-export default Contact;
+/* — small helpers to keep classes tidy — */
+
+function Field({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <label className="block">
+      <span className="mb-2 block text-sm font-medium text-neutral-800 dark:text-zinc-300">
+        {label}
+      </span>
+      {children}
+    </label>
+  );
+}
+
+function Social({
+  href,
+  label,
+  children,
+}: {
+  href: string;
+  label: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <a
+      href={href}
+      target={href.startsWith('http') ? '_blank' : undefined}
+      rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
+      aria-label={label}
+      className="text-purple-700 hover:text-purple-600 transition
+                 dark:text-purple-300 dark:hover:text-purple-200
+                 transform hover:scale-110"
+    >
+      {children}
+    </a>
+  );
+}

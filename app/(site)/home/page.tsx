@@ -22,11 +22,14 @@ export default function HomePage() {
   if (loading) return <Loading />;
 
   return (
-    <div className="min-h-screen bg-white text-neutral-900 dark:bg-black dark:text-white transition-colors">
+    // NOTE: no bg/text classes here — inherits from <body> which the theme toggles
+    <div className="min-h-screen transition-colors">
       {/* small floating utility bar with theme toggle */}
-      <div className="fixed top-6 inset-x-0 z-40 flex justify-center">
-        <div className="rounded-2xl border border-neutral-200 bg-white/80 px-3 py-2 backdrop-blur-sm
-                        dark:border-white/10 dark:bg-white/5">
+      <div className="fixed inset-x-0 top-6 z-40 flex justify-center">
+        <div
+          className="rounded-2xl border border-neutral-200 bg-white/80 px-3 py-2 backdrop-blur-sm
+                     dark:border-white/10 dark:bg-white/5"
+        >
           <ThemeToggle />
         </div>
       </div>
@@ -38,14 +41,14 @@ export default function HomePage() {
         <section className="grid grid-cols-1 gap-8 md:grid-cols-12 md:gap-10">
           {/* avatar column */}
           <div className="md:col-span-2">
-            <div className="relative h-20 w-20 md:h-24 md:w-24 overflow-hidden rounded-full border border-neutral-200 dark:border-white/10">
+            <div className="relative h-20 w-20 overflow-hidden rounded-full border border-neutral-200 md:h-24 md:w-24 dark:border-white/10">
               <Image src="/profile.jpeg" alt="Liana Perry" fill className="object-cover" priority />
             </div>
           </div>
 
           {/* text column */}
           <div className="md:col-span-10">
-            <h1 className="font-extrabold tracking-tight leading-tight text-4xl md:text-[44px]">
+            <h1 className="text-4xl font-extrabold leading-tight tracking-tight md:text-[44px]">
               Hey, I’m Liana.
             </h1>
 
@@ -143,6 +146,7 @@ export default function HomePage() {
   );
 }
 
+/* ---------- Reusable card ---------- */
 function Card({
   href,
   title,
@@ -156,12 +160,14 @@ function Card({
     'rounded-xl border border-neutral-200 bg-neutral-50/80 p-6 backdrop-blur-sm transition ' +
     'hover:-translate-y-1 hover:shadow-lg hover:shadow-purple-500/10 duration-300 ' +
     'dark:border-white/10 dark:bg-white/5 dark:hover:bg-white/10';
+
   const inner = (
     <>
       <h3 className="mb-2 text-lg font-semibold text-purple-700 dark:text-purple-300">{title}</h3>
       <p className="text-sm text-neutral-700 dark:text-zinc-300">{children}</p>
     </>
   );
+
   return href ? (
     <Link href={href} className={cls}>
       {inner}

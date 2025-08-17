@@ -2,10 +2,7 @@
 
 export default function Maintenance() {
   return (
-    <div className="min-h-screen flex flex-col
-                    bg-white text-neutral-900
-                    dark:bg-black dark:text-white
-                    transition-colors">
+    <div className="relative min-h-screen">
       {/* Give space if you use a floating dock navbar */}
       <main className="flex-1 flex items-center justify-center px-6 pt-28">
         <div className="text-center space-y-4">

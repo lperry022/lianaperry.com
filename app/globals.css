@@ -1,52 +1,13 @@
-/* ========= Tailwind + Icon font ========= */
+/* app/globals.css — Tailwind v4 style */
 @import "tailwindcss";
 @import "@fortawesome/fontawesome-free/css/all.min.css";
 
-/* ========= Color tokens (light by default) ========= */
-/* These variables drive the whole site. We flip them with `html.dark` below. */
-:root {
-  --bg: #ffffff;
-  --fg: #171717;
-  --muted-fg: #525252;
+/* Make native UI (form controls, scrollbars) pick the right scheme */
+:root { color-scheme: light; }
+html.dark { color-scheme: dark; }
+* { transition: background-color .25s, color .25s, border-color .25s; }
 
-  /* Surfaces / borders used in cards, headers, etc. */
-  --surface: rgba(250, 250, 250, 0.8);
-  --surface-hover: rgba(245, 245, 245, 0.95);
-  --border: rgba(17, 17, 17, 0.08);
-
-  /* Accents you already use */
-  --accent: #7c3aed;    /* violet-600-ish */
-  --accent-weak: rgba(124, 58, 237, 0.12);
-}
-
-/* Dark mode (controlled by next-themes via `attribute="class"` on <html>) */
-html.dark {
-  --bg: #000000;        /* pure black works nicely with your design */
-  --fg: #f5f5f5;
-  --muted-fg: #a1a1aa;
-
-  --surface: rgba(255, 255, 255, 0.04);
-  --surface-hover: rgba(255, 255, 255, 0.08);
-  --border: rgba(255, 255, 255, 0.10);
-
-  --accent: #a78bfa;    /* violet-400-ish */
-  --accent-weak: rgba(167, 139, 250, 0.12);
-}
-
-/* ========= App root styles ========= */
-html,
-body {
-  height: 100%;
-}
-
-body {
-  background: var(--bg);
-  color: var(--fg);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-/* Smooth color transitions when toggling theme */
+/* Smooth theme transitions */
 * {
   transition:
     background-color .25s ease,
@@ -56,74 +17,26 @@ body {
     stroke .25s ease;
 }
 
-/* Respect reduced motion */
-@media (prefers-reduced-motion: reduce) {
-  * {
-    transition: none !important;
-    animation-duration: 0.001ms !important;
-    animation-iteration-count: 1 !important;
-  }
-}
-
-/* ========= Selection color ========= */
-::selection {
-  background: var(--accent-weak);
-  color: var(--fg);
-}
-
-/* ========= Scrollbar (nice + theme-aware) ========= */
-* {
-  scrollbar-width: thin;
-  scrollbar-color: var(--border) transparent;
-}
-*::-webkit-scrollbar {
-  height: 10px;
-  width: 10px;
-}
-*::-webkit-scrollbar-track {
-  background: transparent;
-}
+/* Optional: nice scrollbars */
+* { scrollbar-width: thin; scrollbar-color: rgb(210 210 215 / .5) transparent; }
+*::-webkit-scrollbar { width: 10px; height: 10px; }
+*::-webkit-scrollbar-track { background: transparent; }
 *::-webkit-scrollbar-thumb {
-  background-color: var(--border);
+  background-color: rgb(210 210 215 / .5);
   border-radius: 999px;
   border: 2px solid transparent;
   background-clip: padding-box;
 }
-*::-webkit-scrollbar-thumb:hover {
-  background-color: color-mix(in oklab, var(--border), #000 20%);
-}
 
-/* ========= Utility animations you already use ========= */
-@layer utilities {
-  .animate-fade-slide {
-    animation: fade-slide 0.5s ease-in-out;
-  }
-  @keyframes fade-slide {
-    from { opacity: 0; transform: translateY(10px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-
-  .animate-blink {
-    animation: blink 1s step-start infinite;
-  }
-  @keyframes blink {
-    50% { opacity: 0; }
-  }
+/* Utilities you already use */
+@utility animate-fade-slide {
+  animation: fade-slide .5s ease-in-out;
 }
-
-/* ========= Handy component tokens (optional) ========= */
-/* Use these classes for cards/sections without repeating colors everywhere */
-.surface {
-  background: var(--surface);
-  border: 1px solid var(--border);
+@keyframes fade-slide {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
-.surface-hover:hover {
-  background: var(--surface-hover);
+@utility animate-blink {
+  animation: blink 1s step-start infinite;
 }
-.text-muted {
-  color: var(--muted-fg);
-}
-.ring-accent:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 2px var(--accent);
-}
+@keyframes blink { 50% { opacity: 0; } }
