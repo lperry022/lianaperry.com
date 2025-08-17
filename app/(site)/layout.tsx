@@ -1,13 +1,13 @@
-"use client";
+// app/(site)/layout.tsx
+import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 
-import Navbar from "@/components/Navbar";
-
-export default function SiteLayout({ children }: { children: React.ReactNode }) {
-  // This is a nested layout, so NO <html>/<body> here.
+export default function SiteLayout({ children }:{children:React.ReactNode}) {
   return (
-    <>
+    <div className="flex min-h-screen flex-col bg-black text-white">
       <Navbar />
-      {children}
-    </>
+      <main className="flex-1 pt-24">{children}</main>
+      <Footer />
+    </div>
   );
 }

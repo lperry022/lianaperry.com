@@ -17,7 +17,7 @@ import {
 // === Tunables ===
 const GITHUB_USER = "lperry022";
 const CARD_CLASS =
-  "bg-white/5 backdrop-blur-sm hover:bg-white/10 p-6 rounded-xl border border-white/10 transition transform hover:-translate-y-1 hover:shadow-lg hover:shadow-purple-700/30 duration-300";
+  "bg-white/5 backdrop-blur-sm hover:bg-white/10 p-6 rounded-xl border border-white/10 transition trans rm hover:-translate-y-1 hover:shadow-lg hover:shadow-purple-700/30 duration-300";
 
 // === Types ===
 interface Repo {
