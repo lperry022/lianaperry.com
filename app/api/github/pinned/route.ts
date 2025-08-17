@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
 export async function GET() {
-  const token = process.env.GITHUB_TOKEN; // repo read-only PAT
+  const token = process.env.GITHUB_TOKEN;
   if (!token) return NextResponse.json({ error: "No token" }, { status: 500 });
 
   const query = `
@@ -32,25 +32,31 @@ export async function GET() {
       Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
     },
-    // cache pinned for 1h
     next: { revalidate: 3600 },
     body,
   });
 
+  const text = await res.text(); // <-- show the real error
   if (!res.ok) {
-    return NextResponse.json({ error: `GitHub ${res.status}` }, { status: res.status });
+    return NextResponse.json(
+      { error: `GitHub ${res.status}: ${text}` },
+      { status: res.status }
+    );
   }
-  const json = await res.json();
-  const pinned = (json.data?.user?.pinnedItems?.nodes ?? []).map((r: any) => ({
+
+  const json = JSON.parse(text);
+  const nodes = json?.data?.user?.pinnedItems?.nodes ?? [];
+  const pinned = nodes.map((r: any) => ({
     title: r.name,
     blurb: r.description ?? "No description provided.",
     tags: [r.primaryLanguage?.name ?? "Repo"],
-    stars: r.stargazerCount,
+    stars: r.stargazerCount ?? 0,
     language: r.primaryLanguage?.name ?? undefined,
     repoUrl: r.url,
     homepage: r.homepageUrl ?? undefined,
     updated: r.pushedAt,
     archived: r.isArchived,
   }));
+
   return NextResponse.json({ pinned });
 }
