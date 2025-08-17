@@ -1,26 +1,38 @@
-'use client';
+"use client";
 
-import { useTheme } from 'next-themes';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
+import { Sun, Moon } from "lucide-react"; // icons for theme toggle
 
-export default function ThemeToggle() {
-  const { resolvedTheme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
+const ThemeToggle = () => {
+  const [theme, setTheme] = useState("light");
 
-  // Avoid hydration mismatch: only render after mount
-  useEffect(() => setMounted(true), []);
-  if (!mounted) return null;
+  useEffect(() => {
+    // Load saved theme or default to light
+    const savedTheme = localStorage.getItem("theme") || "light";
+    setTheme(savedTheme);
+    document.documentElement.classList.toggle("dark", savedTheme === "dark");
+  }, []);
 
-  const isDark = resolvedTheme === 'dark';
+  const toggleTheme = () => {
+    const newTheme = theme === "light" ? "dark" : "light";
+    setTheme(newTheme);
+    document.documentElement.classList.toggle("dark", newTheme === "dark");
+    localStorage.setItem("theme", newTheme);
+  };
 
   return (
     <button
-      type="button"
-      onClick={() => setTheme(isDark ? 'light' : 'dark')}
-      className="rounded-xl border border-neutral-200 bg-neutral-50/80 px-3 py-2 text-sm
-                 dark:border-white/10 dark:bg-white/5"
+      onClick={toggleTheme}
+      className="p-2 rounded-full bg-gray-200 dark:bg-gray-800 transition"
+      aria-label="Toggle theme"
     >
-      {isDark ? 'Light mode' : 'Dark mode'}
+      {theme === "light" ? (
+        <Moon className="w-5 h-5 text-gray-800" />
+      ) : (
+        <Sun className="w-5 h-5 text-yellow-400" />
+      )}
     </button>
   );
-}
+};
+
+export default ThemeToggle;
