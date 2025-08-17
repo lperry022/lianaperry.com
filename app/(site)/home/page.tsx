@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import Loading from '@/components/Loading';
 import ThemeToggle from '@/components/ThemeToggle';
+import { motion } from 'framer-motion';
 
 export default function HomePage() {
   const [loading, setLoading] = useState(true);
@@ -48,9 +49,10 @@ export default function HomePage() {
 
           {/* text column */}
           <div className="md:col-span-10">
-            <h1 className="text-4xl font-extrabold leading-tight tracking-tight md:text-[44px]">
-              Hey, I’m Liana.
+            <h1 className="font-bold tracking-tight leading-tight text-4xl md:text-[44px]">
+              Hi, I’m Liana.
             </h1>
+
 
             <p className="mt-4 max-w-xl text-base leading-relaxed text-neutral-700 dark:text-zinc-300">
               Psychology background meets cyber. I focus on ethical hacking, secure development, and
@@ -70,7 +72,7 @@ export default function HomePage() {
 
               <a
                 href="mailto:lianaperryy@gmail.com?subject=Opportunities%20for%20Liana"
-                className="rounded-xl bg-emerald-500/15 px-4 py-2 text-sm font-medium text-emerald-700
+                className="rounded-xl bg-emerald-900/15 px-4 py-2 text-sm font-medium text-emerald-800
                            hover:bg-emerald-500/20
                            dark:bg-emerald-400/15 dark:text-emerald-300 dark:hover:bg-emerald-400/20"
               >
@@ -112,21 +114,63 @@ export default function HomePage() {
         {/* =========================
             ABOUT
         ========================== */}
-        <section className="mt-16">
-          <h2 className="mb-3 text-2xl font-bold text-purple-700 dark:text-purple-400">About Me</h2>
-          <p className="max-w-3xl text-sm leading-relaxed text-neutral-700 dark:text-zinc-300">
-            I’m a cybersecurity student with a foundation in psychology, passionate about ethical
-            hacking, secure development, and digital forensics. My portfolio reflects both technical
-            skill and human-centered design, built to demonstrate not only what I can do, but how I think.
+        <section className="mx-auto w-full max-w-6xl px-4 pb-32 pt-28 md:px-6">
+          <motion.h2
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="mb-6 text-2xl font-semibold tracking-tight md:text-4xl"
+          >
+            About Me
+          </motion.h2>
+
+          <p className="mb-4">
+            I’m Liana — someone who’s always been fascinated by the intersection of people and technology.
+            I began with a <strong>Bachelor of Psychological Science</strong>, where I studied how humans think, decide,
+            and behave online. Over time, I realized how closely those patterns connect to scams, social engineering,
+            and identity misuse. That insight led me to pursue a <strong>Master of Cybersecurity (in progress)</strong>,
+            blending psychology with technical defense.
+          </p>
+
+          <p className="mb-4">
+            Today, I work as an <strong>Identity and Cybersecurity Case Manager</strong>, helping individuals recover
+            from scams, data breaches, and identity theft. My role combines empathy and problem-solving—resetting accounts,
+            hardening devices, and guiding clients back to safety. My psychology background helps me connect with people
+            in crisis, while my cybersecurity training ensures the solutions are effective and lasting.
+          </p>
+
+          <p className="mb-4">
+            Alongside my casework, I’m building deeper skills in <strong>digital forensics</strong>,
+            <strong>secure development</strong>, and <strong>SecDevOps</strong>. I enjoy breaking systems apart to
+            understand failure modes, then rebuilding them with better controls and guardrails. I also value
+            <strong>security education</strong>—turning complex concepts into approachable guidance so people and
+            teams can protect themselves more confidently.
+          </p>
+
+          <p className="mb-4">
+            Looking ahead, I’m eager to grow across <strong>digital forensics</strong>, <strong>threat intelligence</strong>,
+            and <strong>online child safety</strong>—fields where psychology and cybersecurity together can make a
+            lasting impact. My north star is simple: help people feel safe and in control of their digital lives.
+          </p>
+
+          <p className="mt-6 text-purple-600 dark:text-purple-300 font-medium">
+            🔒 If you share that mission, let’s connect! I’m always open to collaborations, exchanging ideas,
+            and learning from others in the field.
           </p>
         </section>
 
         {/* =========================
             EXPLORE (bottom)
         ========================== */}
-        <section className="mt-16">
-          <h2 className="mb-6 text-2xl font-bold text-purple-700 dark:text-purple-400">Explore</h2>
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <section className="mx-auto w-full max-w-6xl px-4 pb-32 pt-28 md:px-6">
+          <motion.h2
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="mb-6 text-2xl font-semibold tracking-tight md:text-4xl"
+          >
+            Explore
+          </motion.h2>          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
             <Card href="/projects" title="🛠️ Projects">
               View my cybersecurity and development projects — from buffer overflows to secure DevOps pipelines.
             </Card>

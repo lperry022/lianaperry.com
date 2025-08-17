@@ -178,7 +178,7 @@ export default function ProjectsPage() {
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="mb-3 text-3xl font-semibold tracking-tight md:text-4xl"
+          className="mb-6 text-2xl font-semibold tracking-tight md:text-4xl"
         >
           Projects
         </motion.h1>
@@ -238,11 +238,10 @@ export default function ProjectsPage() {
               <button
                 key={c}
                 onClick={() => setFilter(c)}
-                className={`rounded-full border px-3 py-1 text-xs transition ${
-                  filter === c
+                className={`rounded-full border px-3 py-1 text-xs transition ${filter === c
                     ? 'border-violet-400 bg-violet-100 text-violet-900 dark:border-violet-500 dark:bg-violet-500/20 dark:text-violet-100'
                     : 'border-neutral-300 bg-white text-neutral-800 hover:border-neutral-400 dark:border-white/10 dark:bg-zinc-900/60 dark:text-zinc-300'
-                }`}
+                  }`}
               >
                 {c}
               </button>

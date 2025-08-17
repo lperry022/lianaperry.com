@@ -35,22 +35,27 @@ export default function Contact() {
         >
           {/* Contact form */}
           <div>
-            <h2 className="mb-6 text-4xl font-bold text-purple-700 dark:text-purple-400">
-              Contact Me
-            </h2>
-
-            {submitted ? (
-              <p className="text-lg text-emerald-700 dark:text-emerald-400">
-                Thanks for your message! I’ll get back to you soon.
-              </p>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <Field label="Name">
-                  <input
-                    name="name"
-                    autoComplete="name"
-                    required
-                    className="w-full rounded-md px-4 py-2
+            <section className="mx-auto w-full max-w-6xl px-4 pb-32 pt-28 md:px-6">
+              <motion.h1
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+                className="mb-6 text-2xl font-semibold tracking-tight md:text-4xl"
+              >
+                Contact Me
+              </motion.h1>
+              {submitted ? (
+                <p className="text-lg text-emerald-700 dark:text-emerald-400">
+                  Thanks for your message! I’ll get back to you soon.
+                </p>
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <Field label="Name">
+                    <input
+                      name="name"
+                      autoComplete="name"
+                      required
+                      className="w-full rounded-md px-4 py-2
                                bg-white text-neutral-900
                                border border-neutral-300
                                placeholder-neutral-500
@@ -59,16 +64,16 @@ export default function Contact() {
                                dark:bg-zinc-900 dark:text-white
                                dark:border-white/10 dark:placeholder-zinc-500
                                dark:focus:border-violet-500 dark:focus:ring-violet-500/30"
-                  />
-                </Field>
+                    />
+                  </Field>
 
-                <Field label="Email">
-                  <input
-                    type="email"
-                    name="email"
-                    autoComplete="email"
-                    required
-                    className="w-full rounded-md px-4 py-2
+                  <Field label="Email">
+                    <input
+                      type="email"
+                      name="email"
+                      autoComplete="email"
+                      required
+                      className="w-full rounded-md px-4 py-2
                                bg-white text-neutral-900
                                border border-neutral-300
                                placeholder-neutral-500
@@ -77,15 +82,15 @@ export default function Contact() {
                                dark:bg-zinc-900 dark:text-white
                                dark:border-white/10 dark:placeholder-zinc-500
                                dark:focus:border-violet-500 dark:focus:ring-violet-500/30"
-                  />
-                </Field>
+                    />
+                  </Field>
 
-                <Field label="Message">
-                  <textarea
-                    name="message"
-                    rows={5}
-                    required
-                    className="w-full rounded-md px-4 py-2
+                  <Field label="Message">
+                    <textarea
+                      name="message"
+                      rows={5}
+                      required
+                      className="w-full rounded-md px-4 py-2
                                bg-white text-neutral-900
                                border border-neutral-300
                                placeholder-neutral-500
@@ -94,20 +99,21 @@ export default function Contact() {
                                dark:bg-zinc-900 dark:text-white
                                dark:border-white/10 dark:placeholder-zinc-500
                                dark:focus:border-violet-500 dark:focus:ring-violet-500/30"
-                  />
-                </Field>
+                    />
+                  </Field>
 
-                <button
-                  type="submit"
-                  className="inline-flex items-center justify-center rounded-lg px-4 py-2
+                  <button
+                    type="submit"
+                    className="inline-flex items-center justify-center rounded-lg px-4 py-2
                              font-medium text-white transition
                              bg-violet-600 hover:bg-violet-500
                              focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-400/60"
-                >
-                  Send Message
-                </button>
-              </form>
-            )}
+                  >
+                    Send Message
+                  </button>
+                </form>
+              )}
+            </section>
           </div>
 
           {/* Socials */}
