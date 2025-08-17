@@ -1,27 +1,23 @@
 'use client';
 
-import React from 'react';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
-
-const Maintenance = () => {
+export default function Maintenance() {
   return (
-    <div className="min-h-screen bg-black text-white flex flex-col">
-      {/* Navbar */}
-      <Navbar />
-
-      {/* Centered message */}
-      <main className="flex-grow flex items-center justify-center px-6">
+    <div className="min-h-screen flex flex-col
+                    bg-white text-neutral-900
+                    dark:bg-black dark:text-white
+                    transition-colors">
+      {/* Give space if you use a floating dock navbar */}
+      <main className="flex-1 flex items-center justify-center px-6 pt-28">
         <div className="text-center space-y-4">
-          <h1 className="text-4xl md:text-5xl font-bold text-purple-300">🚧 Under Maintenance</h1>
-          <p className="text-gray-400 text-lg">This page is currently being updated. Please check back soon.</p>
+          <h1 className="text-4xl md:text-5xl font-bold
+                         text-purple-700 dark:text-purple-300">
+            🚧 Under Maintenance
+          </h1>
+          <p className="text-lg text-neutral-700 dark:text-zinc-300">
+            This page is being updated. Please check back soon.
+          </p>
         </div>
       </main>
-
-      {/* Footer */}
-      <Footer />
     </div>
   );
-};
-
-export default Maintenance;
+}

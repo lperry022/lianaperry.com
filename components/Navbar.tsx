@@ -1,6 +1,6 @@
 
 'use client';
-
+import ThemeToggle from "./ThemeToggle";
 import Link from 'next/link';
 import { Home, FolderGit2, Mail, FileText } from 'lucide-react';
 
@@ -9,12 +9,15 @@ export default function Navbar() {
     <nav className="fixed top-6 inset-x-0 z-50 flex justify-center">
       <div
         className="
-          flex items-center gap-2 rounded-2xl border
-          border-neutral-200 bg-white/90 px-3 py-2 shadow-[0_6px_30px_-12px_rgba(0,0,0,0.25)]
-          backdrop-blur supports-[backdrop-filter]:bg-white/70
-          dark:border-white/10 dark:bg-white/5 dark:shadow-[0_6px_30px_-12px_rgba(0,0,0,0.6)]
-        "
+    flex items-center gap-2 rounded-2xl
+    border border-neutral-200 bg-white/90 backdrop-blur px-3 py-2 shadow-[0_6px_30px_-12px_rgba(0,0,0,0.25)]
+    supports-[backdrop-filter]:bg-white/70
+    dark:border-white/10 dark:bg-black/60 dark:backdrop-blur-md dark:shadow-[0_8px_30px_-12px_rgba(0,0,0,0.6)]
+  "
       >
+
+        <ThemeToggle />
+        <Divider />
         <IconLink href="/home" label="Home">
           <Home className="h-5 w-5" />
         </IconLink>

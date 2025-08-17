@@ -1,34 +1,47 @@
 'use client';
 
-import React from 'react';
-import GlowButton from '../../components/GlowButton';
-import Link from 'next/link';
+import Image from 'next/image';
+import GlowButton from '@/components/GlowButton';
 
-
-const Entry = () => {
+export default function Entry() {
   return (
-    <div className="h-screen bg-black text-white flex items-center justify-center px-6">
-      <div className="flex flex-col md:flex-row items-center md:items-start gap-12">
-
+    <div
+      className="
+        relative min-h-screen flex items-center justify-center
+        bg-black text-white px-8
+      "
+    >
+      <div className="flex flex-col md:flex-row items-center md:items-center gap-16 max-w-6xl w-full">
         {/* Left: ALERT Image */}
-        <div className="w-80 h-auto">
-          <img src="/assets/alert.png" alt="Alert Logo" className="w-full h-auto object-contain" />
+        <div className="w-64 md:w-80 lg:w-96 flex-shrink-0">
+          <div className="relative w-full">
+            <Image
+              src="/assets/alert.png"
+              alt="Alert logo"
+              width={400}
+              height={200}
+              className="object-contain w-full"
+              priority
+            />
+          </div>
         </div>
 
-        {/* Right: Text and Button */}
-        <div className="text-center md:text-left space-y-6 max-w-md">
-          <p className="text-xs uppercase tracking-widest text-gray-300">
-            This portfolio isn’t just a website – it’s a simulation of my professional growth.
-          </p>
-          <p className="text-xs uppercase tracking-widest text-gray-300">
-            Inspired by my background in psychology and cybersecurity, the interface reflects how I think, learn, and evolve.
-          </p>
-          <GlowButton text="Enter the System" href="/home" />
-        </div>
+        {/* Right: Text + CTA */}
+        <div className="flex flex-col text-center md:text-left space-y-8 max-w-lg">
+          <div className="space-y-4">
+            <p className="text-sm uppercase tracking-widest text-gray-300 leading-relaxed">
+              This portfolio isn’t just a website — it’s a simulation of my professional growth.
+            </p>
+            <p className="text-sm uppercase tracking-widest text-gray-300 leading-relaxed">
+              Inspired by my background in psychology and cybersecurity, the interface reflects how I think, learn, and evolve.
+            </p>
+          </div>
 
+          <div>
+            <GlowButton text="Enter the System" href="/home" />
+          </div>
+        </div>
       </div>
     </div>
   );
-};
-
-export default Entry;
+}

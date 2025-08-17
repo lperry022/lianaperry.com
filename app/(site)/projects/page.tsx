@@ -16,8 +16,13 @@ import {
 
 // === Tunables ===
 const GITHUB_USER = "lperry022";
+
+// Unified, theme-aware card class
 const CARD_CLASS =
-  "bg-white/5 backdrop-blur-sm hover:bg-white/10 p-6 rounded-xl border border-white/10 transition trans rm hover:-translate-y-1 hover:shadow-lg hover:shadow-purple-700/30 duration-300";
+  "rounded-xl border p-6 backdrop-blur-sm transition duration-300 " +
+  "hover:-translate-y-1 hover:shadow-lg hover:shadow-purple-500/10 " +
+  "border-neutral-200 bg-neutral-50/80 " +
+  "dark:border-white/10 dark:bg-white/5 dark:hover:bg-white/10";
 
 // === Types ===
 interface Repo {
@@ -29,7 +34,7 @@ interface Repo {
   homepage: string | null;
   fork: boolean;
   archived: boolean;
-  pushed_at: string; // ISO date
+  pushed_at: string;
 }
 
 interface PinnedItem {
@@ -45,7 +50,7 @@ interface PinnedItem {
 }
 
 const shimmer =
-  "before:absolute before:inset-0 before:animate-pulse before:bg-[linear-gradient(110deg,transparent,rgba(255,255,255,0.06),transparent)] before:bg-[length:200%_100%]";
+  "before:absolute before:inset-0 before:animate-pulse before:bg-[linear-gradient(110deg,transparent,rgba(0,0,0,0.06),transparent)] dark:before:bg-[linear-gradient(110deg,transparent,rgba(255,255,255,0.06),transparent)] before:bg-[length:200%_100%]";
 
 export default function ProjectsPage() {
   const [repos, setRepos] = useState<Repo[]>([]);
@@ -76,14 +81,9 @@ export default function ProjectsPage() {
           ),
         ]);
 
-        if (!pinnedRes.ok) {
-          throw new Error(`Pinned fetch failed: ${pinnedRes.status}`);
-        }
-        if (!reposRes.ok) {
-          throw new Error(
-            `GitHub: ${reposRes.status} ${reposRes.statusText}`
-          );
-        }
+        if (!pinnedRes.ok) throw new Error(`Pinned fetch failed: ${pinnedRes.status}`);
+        if (!reposRes.ok)
+          throw new Error(`GitHub: ${reposRes.status} ${reposRes.statusText}`);
 
         const { pinned: pinnedJson } = await pinnedRes.json();
         const reposJson: Repo[] = await reposRes.json();
@@ -118,16 +118,9 @@ export default function ProjectsPage() {
 
   // Non-featured repos (skip forks/archived and skip any already in pinned)
   const otherRepos = useMemo(() => {
-    const pinnedNames = new Set(
-      pinned.map((p) => (p.title || "").toLowerCase())
-    );
+    const pinnedNames = new Set(pinned.map((p) => (p.title || "").toLowerCase()));
     return repos
-      .filter(
-        (r) =>
-          !r.fork &&
-          !r.archived &&
-          !pinnedNames.has(r.name.toLowerCase())
-      )
+      .filter((r) => !r.fork && !r.archived && !pinnedNames.has(r.name.toLowerCase()))
       .map((r) => ({
         title: r.name,
         blurb: r.description ?? "No description provided.",
@@ -163,9 +156,7 @@ export default function ProjectsPage() {
           .includes(query.toLowerCase());
         const matchesFilter =
           filter === "All" ||
-          (p.tags ?? []).some(
-            (t: string) => t.toLowerCase() === filter.toLowerCase()
-          );
+          (p.tags ?? []).some((t: string) => t.toLowerCase() === filter.toLowerCase());
         return matchesSearch && matchesFilter;
       });
 
@@ -182,11 +173,8 @@ export default function ProjectsPage() {
   }, [pinned, otherRepos, filter, query, sort]);
 
   return (
-    <div className="relative min-h-screen bg-black text-zinc-100">
-      {/* subtle radial glow */}
-      <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(600px_circle_at_50%_-20%,rgba(139,92,246,0.15),transparent_60%)]" />
-
-      <section className="mx-auto w-full max-w-6xl px-4 pb-32 pt-16 md:px-6">
+    <div className="relative min-h-screen bg-white text-neutral-900 dark:bg-black dark:text-zinc-100 transition-colors">
+      <section className="mx-auto w-full max-w-6xl px-4 pb-32 pt-28 md:px-6">
         <motion.h1
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
@@ -196,12 +184,11 @@ export default function ProjectsPage() {
           Projects
         </motion.h1>
 
-        <p className="mb-8 max-w-2xl text-zinc-300">
+        <p className="mb-8 max-w-2xl text-neutral-700 dark:text-zinc-300">
           Experiments and coursework spanning{" "}
-          <span className="text-violet-400">DFIR</span>
-          <span className="mx-1 text-violet-400">SecDevOps</span>, and modern
-          web. Everything here is live from GitHub. Featured projects mirror my
-          GitHub “Pinned” repos.
+          <span className="text-violet-700 dark:text-violet-400">DFIR</span>,{" "}
+          <span className="text-violet-700 dark:text-violet-400">SecDevOps</span>, and modern web.
+          Everything here is live from GitHub. Featured projects mirror my GitHub “Pinned” repos.
         </p>
 
         {/* Toolbar */}
@@ -209,20 +196,26 @@ export default function ProjectsPage() {
           <div className="flex flex-1 items-center gap-3">
             <div className="relative flex-1">
               <Search
-                className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2"
+                className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-neutral-500 dark:text-zinc-400"
                 size={18}
               />
               <input
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Search projects…"
-                className="w-full rounded-xl border border-zinc-800 bg-zinc-900/60 px-10 py-2 text-sm outline-none ring-violet-500/40 transition focus:ring-2"
+                className="w-full rounded-xl border px-10 py-2 text-sm outline-none
+                           border-neutral-300 bg-white text-neutral-900
+                           focus:ring-2 ring-violet-300/60
+                           dark:border-white/10 dark:bg-zinc-900/60 dark:text-white dark:focus:ring-violet-500/40"
               />
             </div>
             <select
               value={sort}
               onChange={(e) => setSort(e.target.value)}
-              className="rounded-xl border border-zinc-800 bg-zinc-900/60 px-3 py-2 text-sm outline-none ring-violet-500/40 focus:ring-2"
+              className="rounded-xl border px-3 py-2 text-sm outline-none
+                         border-neutral-300 bg-white text-neutral-900
+                         focus:ring-2 ring-violet-300/60
+                         dark:border-white/10 dark:bg-zinc-900/60 dark:text-white dark:focus:ring-violet-500/40"
               aria-label="Sort"
             >
               <option value="recent">Most recent</option>
@@ -232,7 +225,9 @@ export default function ProjectsPage() {
             <Link
               href={`https://github.com/${GITHUB_USER}`}
               target="_blank"
-              className="group inline-flex items-center gap-2 rounded-xl border border-violet-600/40 bg-violet-600/10 px-3 py-2 text-sm font-medium text-violet-200 transition hover:bg-violet-600/20"
+              className="group inline-flex items-center gap-2 rounded-xl border px-3 py-2 text-sm font-medium
+                         border-violet-200 bg-violet-100 text-violet-900 hover:bg-violet-200
+                         dark:border-violet-600/40 dark:bg-violet-600/10 dark:text-violet-200 dark:hover:bg-violet-600/20"
             >
               <Github size={16} /> View GitHub
             </Link>
@@ -246,8 +241,8 @@ export default function ProjectsPage() {
                 onClick={() => setFilter(c)}
                 className={`rounded-full border px-3 py-1 text-xs transition ${
                   filter === c
-                    ? "border-violet-500 bg-violet-500/20 text-violet-100"
-                    : "border-zinc-800 bg-zinc-900/60 text-zinc-300 hover:border-zinc-700"
+                    ? "border-violet-400 bg-violet-100 text-violet-900 dark:border-violet-500 dark:bg-violet-500/20 dark:text-violet-100"
+                    : "border-neutral-300 bg-white text-neutral-800 hover:border-neutral-400 dark:border-white/10 dark:bg-zinc-900/60 dark:text-zinc-300"
                 }`}
               >
                 {c}
@@ -271,24 +266,23 @@ export default function ProjectsPage() {
 
         {/* Error */}
         {!loading && error && (
-          <div className="mb-6 rounded-xl border border-red-900/50 bg-red-950/30 p-4 text-sm text-red-200">
-            Couldn’t load GitHub data ({error}). Showing nothing to avoid stale
-            entries.
+          <div className="mb-6 rounded-xl border p-4 text-sm
+                          border-red-200 bg-red-50 text-red-900
+                          dark:border-red-900/50 dark:bg-red-950/30 dark:text-red-200">
+            Couldn’t load GitHub data ({error}). Showing nothing to avoid stale entries.
           </div>
         )}
 
         {/* Results */}
         {!loading && !error && <ProjectGrid items={filtered} />}
 
-        <div className="mt-12 text-center text-sm text-zinc-400">
-          <p className="mb-2">
-            Want details on a specific project or private coursework?
-          </p>
+        <div className="mt-12 text-center text-sm text-neutral-600 dark:text-zinc-400">
+          <p className="mb-2">Want details on a specific project or private coursework?</p>
           <p>
             Ping me on GitHub{" "}
             <Link
               href={`https://github.com/${GITHUB_USER}`}
-              className="text-violet-300 underline"
+              className="text-violet-700 underline dark:text-violet-300"
             >
               @{GITHUB_USER}
             </Link>{" "}
@@ -303,7 +297,9 @@ export default function ProjectsPage() {
 function ProjectGrid({ items }: { items: any[] }) {
   if (!items.length)
     return (
-      <div className="rounded-xl border border-zinc-800 bg-zinc-950/60 p-8 text-center text-zinc-400">
+      <div className="rounded-xl border p-8 text-center
+                      border-neutral-200 bg-neutral-50 text-neutral-600
+                      dark:border-zinc-800 dark:bg-zinc-950/60 dark:text-zinc-400">
         No projects match your filters yet.
       </div>
     );
@@ -320,19 +316,21 @@ function ProjectGrid({ items }: { items: any[] }) {
           className={`group relative overflow-hidden ${CARD_CLASS}`}
         >
           <div className="mb-4 flex items-center gap-3">
-            <div className="relative h-10 w-10 flex-shrink-0 overflow-hidden rounded-xl border border-white/10 bg-white/10">
+            <div className="relative h-10 w-10 flex-shrink-0 overflow-hidden rounded-xl border
+                            border-neutral-200 bg-white
+                            dark:border-white/10 dark:bg-white/10">
               {p.image ? (
                 <Image src={p.image} alt="" fill className="object-contain p-1" />
               ) : (
                 <div className="h-full w-full" />
               )}
             </div>
-            <h3 className="text-base font-semibold text-purple-300">
+            <h3 className="text-base font-semibold text-purple-700 dark:text-purple-300">
               {p.title}
             </h3>
           </div>
 
-          <p className="mb-4 line-clamp-3 text-sm text-gray-300">
+          <p className="mb-4 line-clamp-3 text-sm text-neutral-700 dark:text-zinc-300">
             {p.blurb}
           </p>
 
@@ -340,24 +338,30 @@ function ProjectGrid({ items }: { items: any[] }) {
             {(p.tags ?? []).slice(0, 5).map((t: string) => (
               <span
                 key={t}
-                className="rounded-full border border-white/10 bg-white/5 px-2 py-0.5 text-[11px] text-purple-200"
+                className="rounded-full border px-2 py-0.5 text-[11px]
+                           border-neutral-300 bg-white text-purple-700
+                           dark:border-white/10 dark:bg-white/5 dark:text-purple-200"
               >
                 {t}
               </span>
             ))}
             {p.language && (
-              <span className="rounded-full border border-white/10 bg-white/5 px-2 py-0.5 text-[11px] text-gray-300">
+              <span className="rounded-full border px-2 py-0.5 text-[11px]
+                               border-neutral-300 bg-white text-neutral-700
+                               dark:border-white/10 dark:bg-white/5 dark:text-zinc-300">
                 <Code2 size={12} className="mr-1 inline" /> {p.language}
               </span>
             )}
             {p.archived && (
-              <span className="rounded-full border border-white/10 bg-white/5 px-2 py-0.5 text-[11px] text-amber-200">
+              <span className="rounded-full border px-2 py-0.5 text-[11px]
+                               border-amber-200 bg-amber-50 text-amber-800
+                               dark:border-amber-800/50 dark:bg-amber-900/20 dark:text-amber-200">
                 archived
               </span>
             )}
           </div>
 
-          <div className="mt-auto flex items-center justify-between text-xs text-gray-400">
+          <div className="mt-auto flex items-center justify-between text-xs text-neutral-600 dark:text-gray-400">
             <div className="flex items-center gap-3">
               {typeof p.stars === "number" && (
                 <span className="inline-flex items-center gap-1">
@@ -377,7 +381,9 @@ function ProjectGrid({ items }: { items: any[] }) {
                 <Link
                   href={p.repoUrl}
                   target="_blank"
-                  className="inline-flex items-center gap-1 rounded-lg border border-white/10 bg-white/5 px-2 py-1 text-[12px] text-zinc-200 transition hover:bg-white/10"
+                  className="inline-flex items-center gap-1 rounded-lg border px-2 py-1 text-[12px]
+                             border-neutral-300 bg-white text-neutral-800 hover:bg-neutral-100
+                             dark:border-white/10 dark:bg-white/5 dark:text-zinc-200 dark:hover:bg-white/10"
                 >
                   <Github size={14} /> Code
                 </Link>
@@ -386,7 +392,9 @@ function ProjectGrid({ items }: { items: any[] }) {
                 <Link
                   href={p.homepage || p.demo}
                   target="_blank"
-                  className="inline-flex items-center gap-1 rounded-lg border border-white/10 bg-white/5 px-2 py-1 text-[12px] text-violet-200 transition hover:bg-white/10"
+                  className="inline-flex items-center gap-1 rounded-lg border px-2 py-1 text-[12px]
+                             border-violet-200 bg-violet-100 text-violet-900 hover:bg-violet-200
+                             dark:border-violet-600/40 dark:bg-violet-600/10 dark:text-violet-200 dark:hover:bg-violet-600/20"
                 >
                   <ExternalLink size={14} /> Live
                 </Link>
