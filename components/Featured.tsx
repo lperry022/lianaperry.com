@@ -126,14 +126,23 @@ export default function Featured({
 
         {/* Recent on LinkedIn */}
         <Card>
-          <div className="mb-3 flex items-center gap-2">
-            <Linkedin className="h-5 w-5 text-[#0A66C2]" />
-            <span className="text-sm text-neutral-600 dark:text-zinc-400">
-              Recent on LinkedIn
-            </span>
+          <div className="mb-3 flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Linkedin className="h-5 w-5 text-[#0A66C2]" />
+              <span className="text-sm text-neutral-600 dark:text-zinc-400">Recent on LinkedIn</span>
+            </div>
+            <Link
+              href="https://www.linkedin.com/in/liana-perry-b5aa2717b/"
+              target="_blank"
+              className="inline-flex items-center gap-1 text-sm text-purple-700 hover:underline dark:text-purple-300"
+            >
+              Open LinkedIn <ExternalLink className="h-3.5 w-3.5" />
+            </Link>
           </div>
-            <LinkedInCardClient /> 
+
+          <LinkedInCardClient />
         </Card>
+
       </div>
     </section>
   );

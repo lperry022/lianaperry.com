@@ -1,13 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  async redirects() {
-    return [
-      {
-        source: '/',
-        destination: '/entry',
-        permanent: false, 
-      },
-    ];
+  images: {
+    domains: ['dms.licdn.com', 'media.licdn.com'],
+    remotePatterns: [
+      { protocol: 'https', hostname: 'dms.licdn.com' },
+      { protocol: 'https', hostname: 'media.licdn.com' },
+    ],
+    formats: ['image/avif', 'image/webp'],
   },
 };
 
