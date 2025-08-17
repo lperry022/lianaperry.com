@@ -3,7 +3,6 @@
 import React from 'react';
 import GlowButton from '../../components/GlowButton';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 
 
 const Entry = () => {
