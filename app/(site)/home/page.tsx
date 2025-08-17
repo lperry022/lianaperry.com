@@ -6,6 +6,7 @@ import Image from 'next/image';
 import Loading from '@/components/Loading';
 import ThemeToggle from '@/components/ThemeToggle';
 import { motion } from 'framer-motion';
+import WorkTimeline from '@/components/WorkTimeline';
 
 export default function HomePage() {
   const [loading, setLoading] = useState(true);
@@ -114,12 +115,12 @@ export default function HomePage() {
         {/* =========================
             ABOUT
         ========================== */}
-        <section className="mx-auto w-full max-w-6xl px-4 pb-32 pt-28 md:px-6">
+        <section className="mx-auto w-full max-w-6xl px-4 pt-16 pb-12 md:px-6">
           <motion.h2
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="mb-6 text-2xl font-semibold tracking-tight md:text-4xl"
+            className="mb-4 text-[26px] font-semibold tracking-tight md:text-3xl"
           >
             About Me
           </motion.h2>
@@ -160,14 +161,30 @@ export default function HomePage() {
         </section>
 
         {/* =========================
-            EXPLORE (bottom)
-        ========================== */}
-        <section className="mx-auto w-full max-w-6xl px-4 pb-32 pt-28 md:px-6">
+    WORK EXPERIENCE
+========================== */}
+        <section className="mx-auto w-full max-w-6xl px-4 pt-8 pb-12 md:px-6">
           <motion.h2
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="mb-6 text-2xl font-semibold tracking-tight md:text-4xl"
+            className="mb-4 text-[26px] font-semibold tracking-tight md:text-3xl"
+          >
+            Work Experience
+          </motion.h2>
+
+          <WorkTimeline />
+        </section>
+
+        {/* =========================
+            EXPLORE (bottom)
+        ========================== */}
+        <section className="mx-auto w-full max-w-6xl px-4 pt-14 pb-20 md:px-6">
+          <motion.h2
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="mb-6 text-[26px] font-semibold tracking-tight md:text-3xl"
           >
             Explore
           </motion.h2>          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
