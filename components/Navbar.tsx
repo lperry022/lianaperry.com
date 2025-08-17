@@ -33,7 +33,7 @@ export default function Navbar() {
         <Divider />
 
         <Link
-          href="/resume.pdf" download
+          href="/Resume.pdf" download
           className="
             ml-1 rounded-xl px-4 py-2 text-sm font-medium
             bg-neutral-900 text-white hover:bg-neutral-800

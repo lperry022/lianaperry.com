@@ -1,11 +1,11 @@
-/* app/globals.css — Tailwind v4 style */
+/* app/globals.css */
 @import "tailwindcss";
+@config "../tailwind.config.js";
 @import "@fortawesome/fontawesome-free/css/all.min.css";
 
-/* Make native UI (form controls, scrollbars) pick the right scheme */
+/* Use the chosen theme for native UI */
 :root { color-scheme: light; }
 html.dark { color-scheme: dark; }
-* { transition: background-color .25s, color .25s, border-color .25s; }
 
 /* Smooth theme transitions */
 * {
@@ -28,15 +28,8 @@ html.dark { color-scheme: dark; }
   background-clip: padding-box;
 }
 
-/* Utilities you already use */
-@utility animate-fade-slide {
-  animation: fade-slide .5s ease-in-out;
-}
-@keyframes fade-slide {
-  from { opacity: 0; transform: translateY(10px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-@utility animate-blink {
-  animation: blink 1s step-start infinite;
-}
-@keyframes blink { 50% { opacity: 0; } }
+/* Utilities */
+@utility animate-fade-slide { animation: fade-slide .5s ease-in-out; }
+@keyframes fade-slide { from {opacity:0;transform:translateY(10px)} to {opacity:1;transform:translateY(0)} }
+@utility animate-blink { animation: blink 1s step-start infinite; }
+@keyframes blink { 50% { opacity: 0 } }
