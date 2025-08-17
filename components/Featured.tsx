@@ -2,6 +2,7 @@
 
 import useSWR from 'swr';
 import Link from 'next/link';
+import LinkedInCardClient from "./LinkedInCardClient"
 import {
   Github,
   Star,
@@ -131,32 +132,7 @@ export default function Featured({
               Recent on LinkedIn
             </span>
           </div>
-
-          {linkedin.title ? (
-            <>
-              <h3 className="mb-2 text-base font-semibold">{linkedin.title}</h3>
-              <Link
-                href={linkedin.url}
-                target="_blank"
-                className="inline-flex items-center gap-1 text-sm text-purple-700 hover:underline dark:text-purple-300"
-              >
-                Read on LinkedIn <ExternalLink className="h-3.5 w-3.5" />
-              </Link>
-            </>
-          ) : (
-            <>
-              <p className="text-sm text-neutral-600 dark:text-zinc-400">
-                Can’t auto-fetch your latest post yet.
-              </p>
-              <Link
-                href={linkedin.url}
-                target="_blank"
-                className="mt-3 inline-flex items-center gap-1 text-sm text-purple-700 hover:underline dark:text-purple-300"
-              >
-                View my LinkedIn → <ExternalLink className="h-3.5 w-3.5" />
-              </Link>
-            </>
-          )}
+            <LinkedInCardClient /> 
         </Card>
       </div>
     </section>
