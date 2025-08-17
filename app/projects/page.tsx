@@ -8,6 +8,8 @@ import { Github, Star, Code2, ExternalLink, CalendarClock, Filter, Search } from
 
 // === Tunables ===
 const GITHUB_USER = "lperry022"; // your GitHub username
+const CARD_CLASS =
+  "bg-white/5 backdrop-blur-sm hover:bg-white/10 p-6 rounded-xl border border-white/10 transition transform hover:-translate-y-1 hover:shadow-lg hover:shadow-purple-700/30 duration-300";
 
 // Curated projects you want to showcase at the top of the page.
 // These will be enriched with live GitHub data (stars, language, links) if found.
@@ -19,48 +21,48 @@ const FEATURED: Array<{
   demo?: string; // optional live link/demo
   image?: string; // optional banner from /public
 }> = [
-  {
-    slug: "ForensiX",
-    title: "ForensiX – Digital Forensics CTF",
-    blurb:
-      "Browser-based CTF platform with challenge cards, flag validation, and neon UI. Now adding server-side persistence and difficulty tags.",
-    tags: ["Web", "DFIR", "Node", "MongoDB"],
-    image: "/globe.svg",
-  },
-  {
-    slug: "lianaperry.com",
-    title: "Portfolio – lianaperry.com",
-    blurb:
-      "Animated portfolio with purple glow aesthetic, particles background, and Framer Motion transitions.",
-    tags: ["Web", "Next.js", "Tailwind"],
-    demo: "https://lianaperry.com",
-    image: "/window.svg",
-  },
-  {
-    slug: "keylogger",
-    title: "Encrypted Keylogger + GUI Viewer",
-    blurb:
-      "Educational keylogger with encrypted logs, GUI viewer, and optional sender; built for coursework and blue-team demos.",
-    tags: ["Tools", "Python", "Security"],
-    image: "/file.svg",
-  },
-  {
-    slug: "LinkedIn-telligence",
-    title: "LinkedIn‑telligence PWA",
-    blurb:
-      "PWA that drafts LinkedIn posts with manual approval, offline support, history, and webhook integration.",
-    tags: ["Web", "PWA", "TypeScript"],
-    image: "/next.svg",
-  },
-  {
-    slug: "Jenkins-DevOps",
-    title: "SecDevOps Pipeline – Jenkins",
-    blurb:
-      "CI pipeline demo for a simple site: build, tests, quality scan, and staged deploy with artifacts.",
-    tags: ["SecDevOps", "CI/CD", "Jenkins"],
-    image: "/vercel.svg",
-  },
-];
+    {
+      slug: "ForensiX",
+      title: "ForensiX – Digital Forensics CTF",
+      blurb:
+        "Browser-based CTF platform with challenge cards, flag validation, and neon UI. Now adding server-side persistence and difficulty tags.",
+      tags: ["Web", "DFIR", "Node", "MongoDB"],
+      image: "/globe.svg",
+    },
+    {
+      slug: "lianaperry.com",
+      title: "Portfolio – lianaperry.com",
+      blurb:
+        "Animated portfolio with purple glow aesthetic, particles background, and Framer Motion transitions.",
+      tags: ["Web", "Next.js", "Tailwind"],
+      demo: "https://lianaperry.com",
+      image: "/window.svg",
+    },
+    {
+      slug: "keylogger",
+      title: "Encrypted Keylogger + GUI Viewer",
+      blurb:
+        "Educational keylogger with encrypted logs, GUI viewer, and optional sender; built for coursework and blue-team demos.",
+      tags: ["Tools", "Python", "Security"],
+      image: "/file.svg",
+    },
+    {
+      slug: "LinkedIn-telligence",
+      title: "LinkedIn‑telligence PWA",
+      blurb:
+        "PWA that drafts LinkedIn posts with manual approval, offline support, history, and webhook integration.",
+      tags: ["Web", "PWA", "TypeScript"],
+      image: "/next.svg",
+    },
+    {
+      slug: "Jenkins-DevOps",
+      title: "SecDevOps Pipeline – Jenkins",
+      blurb:
+        "CI pipeline demo for a simple site: build, tests, quality scan, and staged deploy with artifacts.",
+      tags: ["SecDevOps", "CI/CD", "Jenkins"],
+      image: "/vercel.svg",
+    },
+  ];
 
 // Types for GitHub fetch
 interface Repo {
@@ -235,11 +237,10 @@ export default function RootLayout() {
               <button
                 key={c}
                 onClick={() => setFilter(c)}
-                className={`rounded-full border px-3 py-1 text-xs transition ${
-                  filter === c
+                className={`rounded-full border px-3 py-1 text-xs transition ${filter === c
                     ? "border-violet-500 bg-violet-500/20 text-violet-100"
                     : "border-zinc-800 bg-zinc-900/60 text-zinc-300 hover:border-zinc-700"
-                }`}
+                  }`}
               >
                 {c}
               </button>
@@ -299,47 +300,52 @@ function ProjectGrid({ items }: { items: any[] }) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-20%" }}
           transition={{ duration: 0.4, delay: idx * 0.04 }}
-          className="group relative overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-950 p-4 shadow-[0_0_40px_-20px_rgba(139,92,246,0.5)]"
+          className={`group relative overflow-hidden ${CARD_CLASS}`}
         >
           <div className="mb-4 flex items-center gap-3">
-            <div className="relative h-10 w-10 flex-shrink-0 overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900">
+            <div className="relative h-10 w-10 flex-shrink-0 overflow-hidden rounded-xl border border-white/10 bg-white/10">
               {p.image ? (
                 <Image src={p.image} alt="" fill className="object-contain p-1" />
               ) : (
-                <div className="h-full w-full bg-[radial-gradient(40%_40%_at_50%_50%,rgba(139,92,246,.35),transparent)]" />
+                <div className="h-full w-full" />
               )}
             </div>
-            <h3 className="text-base font-semibold text-zinc-100">{p.title}</h3>
+            <h3 className="text-base font-semibold text-purple-300">{p.title}</h3>
           </div>
 
-          <p className="mb-4 line-clamp-3 text-sm text-zinc-300">{p.blurb}</p>
+          <p className="mb-4 line-clamp-3 text-sm text-gray-300">{p.blurb}</p>
 
           <div className="mb-4 flex flex-wrap gap-2">
             {(p.tags ?? []).slice(0, 5).map((t: string) => (
               <span
                 key={t}
-                className="rounded-full border border-violet-700/40 bg-violet-700/10 px-2 py-0.5 text-[11px] text-violet-200"
+                className="rounded-full border border-white/10 bg-white/5 px-2 py-0.5 text-[11px] text-purple-200"
               >
                 {t}
               </span>
             ))}
             {p.language && (
-              <span className="rounded-full border border-zinc-800 bg-zinc-900 px-2 py-0.5 text-[11px] text-zinc-300">
+              <span className="rounded-full border border-white/10 bg-white/5 px-2 py-0.5 text-[11px] text-gray-300">
                 <Code2 size={12} className="mr-1 inline" /> {p.language}
               </span>
             )}
             {p.archived && (
-              <span className="rounded-full border border-amber-800/50 bg-amber-900/20 px-2 py-0.5 text-[11px] text-amber-200">archived</span>
+              <span className="rounded-full border border-white/10 bg-white/5 px-2 py-0.5 text-[11px] text-amber-200">
+                archived
+              </span>
             )}
           </div>
 
-          <div className="mt-auto flex items-center justify-between text-xs text-zinc-400">
+          <div className="mt-auto flex items-center justify-between text-xs text-gray-400">
             <div className="flex items-center gap-3">
               {typeof p.stars === "number" && (
-                <span className="inline-flex items-center gap-1"><Star size={14} className="opacity-80" /> {p.stars}</span>
+                <span className="inline-flex items-center gap-1">
+                  <Star size={14} className="opacity-80" /> {p.stars}
+                </span>
               )}
               {p.updated && (
-                <span className="inline-flex items-center gap-1"><CalendarClock size={14} className="opacity-80" />
+                <span className="inline-flex items-center gap-1">
+                  <CalendarClock size={14} className="opacity-80" />
                   {new Date(p.updated).toLocaleDateString()}
                 </span>
               )}
@@ -350,7 +356,7 @@ function ProjectGrid({ items }: { items: any[] }) {
                 <Link
                   href={p.repoUrl}
                   target="_blank"
-                  className="inline-flex items-center gap-1 rounded-lg border border-zinc-800 bg-zinc-900 px-2 py-1 text-[12px] text-zinc-200 transition hover:border-violet-700 hover:text-violet-200"
+                  className="inline-flex items-center gap-1 rounded-lg border border-white/10 bg-white/5 px-2 py-1 text-[12px] text-zinc-200 transition hover:bg-white/10"
                 >
                   <Github size={14} /> Code
                 </Link>
@@ -359,19 +365,13 @@ function ProjectGrid({ items }: { items: any[] }) {
                 <Link
                   href={p.homepage || p.demo}
                   target="_blank"
-                  className="inline-flex items-center gap-1 rounded-lg border border-violet-600/40 bg-violet-600/10 px-2 py-1 text-[12px] text-violet-200 transition hover:bg-violet-600/20"
+                  className="inline-flex items-center gap-1 rounded-lg border border-white/10 bg-white/5 px-2 py-1 text-[12px] text-violet-200 transition hover:bg-white/10"
                 >
                   <ExternalLink size={14} /> Live
                 </Link>
               )}
             </div>
           </div>
-
-          {/* Glow on hover */}
-          <div className="pointer-events-none absolute -inset-24 -z-10 rounded-[32px] opacity-0 blur-3xl transition duration-500 group-hover:opacity-100" style={{
-            background:
-              "radial-gradient(600px_circle_at_var(--x,50%)_var(--y,50%), rgba(139,92,246,0.15), transparent 50%)",
-          }} />
         </motion.article>
       ))}
     </div>
