@@ -2,7 +2,6 @@
 
 import useSWR from 'swr';
 import Link from 'next/link';
-import LinkedInCardClient from "./LinkedInCardClient"
 import {
   Github,
   Star,
@@ -19,6 +18,14 @@ type Repo = {
   stargazers_count: number;
   forks_count: number;
   pushed_at: string;
+};
+
+type LinkedInPost = {
+  id: string;
+  title: string;
+  description: string;
+  publishedAt: string | null;
+  url: string;
 };
 
 const GITHUB_USER = 'lperry022';
@@ -40,11 +47,19 @@ export default function Featured({
 }: {
   linkedin?: { url: string; title?: string };
 }) {
+  // GitHub
   const { data, isLoading } = useSWR<{ repos: Repo[] }>(
     '/api/github/recent',
     fetcher
   );
   const repos = data?.repos ?? [];
+
+  // LinkedIn
+  const { data: linkedinData, isLoading: linkedinLoading } = useSWR<{ posts: LinkedInPost[] }>(
+    '/api/linkedin/posts',
+    fetcher
+  );
+  const posts = linkedinData?.posts ?? [];
 
   return (
     <section aria-labelledby="featured" className="mt-12">
@@ -125,24 +140,47 @@ export default function Featured({
         </Card>
 
         {/* Recent on LinkedIn */}
-        <Card>
-          <div className="mb-3 flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Linkedin className="h-5 w-5 text-[#0A66C2]" />
-              <span className="text-sm text-neutral-600 dark:text-zinc-400">Recent on LinkedIn</span>
-            </div>
-            <Link
-              href="https://www.linkedin.com/in/liana-perry-b5aa2717b/"
-              target="_blank"
-              className="inline-flex items-center gap-1 text-sm text-purple-700 hover:underline dark:text-purple-300"
-            >
-              Open LinkedIn <ExternalLink className="h-3.5 w-3.5" />
-            </Link>
-          </div>
+<Card>
+  <div className="mb-3 flex items-center justify-between">
+    <div className="flex items-center gap-2">
+      <Linkedin className="h-5 w-5 text-[#0A66C2]" />
+      <span className="text-sm text-neutral-600 dark:text-zinc-400">Recent on LinkedIn</span>
+    </div>
+    <Link
+      href="https://www.linkedin.com/in/liana-perry-b5aa2717b/"
+      target="_blank"
+      className="inline-flex items-center gap-1 text-sm text-purple-700 hover:underline dark:text-purple-300"
+    >
+      Open LinkedIn <ExternalLink className="h-3.5 w-3.5" />
+    </Link>
+  </div>
 
-          <LinkedInCardClient />
-        </Card>
-
+  <div className="space-y-3">
+    {linkedinLoading ? (
+      <p>Loading LinkedIn posts…</p>
+    ) : posts.length ? (
+      posts.map((post) => (
+        <article key={post.id} className="rounded-xl border p-4 dark:border-white/10">
+          <Link href={post.url} target="_blank" className="block">
+            <h4 className="text-sm font-medium text-neutral-900 dark:text-neutral-100">
+              {post.title}
+            </h4>
+            <p className="text-xs text-neutral-600 dark:text-neutral-400">
+              {post.description}
+            </p>
+            {post.publishedAt && (
+              <p className="text-[11px] text-neutral-500 mt-1">
+                {new Date(post.publishedAt).toLocaleDateString()}
+              </p>
+            )}
+          </Link>
+        </article>
+      ))
+    ) : (
+      <p className="text-sm text-neutral-600 dark:text-zinc-400">No recent LinkedIn posts found.</p>
+    )}
+  </div>
+</Card>
       </div>
     </section>
   );

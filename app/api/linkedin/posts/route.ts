@@ -1,3 +1,4 @@
+// app/api/linkedin/posts/route.ts
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "../../auth/[...nextauth]/route";
 import { NextResponse } from "next/server";

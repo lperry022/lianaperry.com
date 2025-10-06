@@ -25,7 +25,6 @@ export default function HomePage() {
   if (loading) return <Loading />;
 
   return (
-    // NOTE: no bg/text classes here — inherits from <body> which the theme toggles
     <div className="min-h-screen transition-colors">
       {/* small floating utility bar with theme toggle */}
       <div className="fixed inset-x-0 top-6 z-40 flex justify-center">
