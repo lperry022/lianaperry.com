@@ -44,13 +44,13 @@ export default function HomePage() {
         <section className="grid grid-cols-1 gap-8 md:grid-cols-12 md:gap-10">
           {/* avatar column */}
           <div className="md:col-span-2">
-            <div className="relative h-20 w-20 overflow-hidden rounded-full border border-neutral-200 md:h-24 md:w-24 dark:border-white/10">
+            <div className="relative h-40 w-40 overflow-hidden rounded-full border border-neutral-200 md:h-50 md:w-50 dark:border-white/10">
               <Image src="/profile.jpeg" alt="Liana Perry" fill className="object-cover" priority />
             </div>
           </div>
 
           {/* text column */}
-          <div className="md:col-span-10">
+          <div className="md:col-span-10 md:pl-10">
             <h1 className="font-bold tracking-tight leading-tight text-4xl md:text-[44px]">
               Hi, I’m Liana.
             </h1>
@@ -115,7 +115,7 @@ export default function HomePage() {
 
         {/* FEATURED */}
         <Featured />
-        
+
 
         {/* =========================
             ABOUT
